@@ -1,45 +1,41 @@
+% rebase('base.tpl')
 % import model
+<table>
 
-<!DOCTYPE html>
-<html>
-<head>
-  <title>Vislice</title>
-</head>
+  <tr>
+    <td>
+      <h3> ID igre je {{ id_igre }} </h3>
+    </td>
+  </tr>
+    
 
-<body>
+  <tr>
+    <td>
+      <h3> {{ igra.pravilni_del_gesla() }} </h3>
+    </td>
+  </tr>
 
-  <table>
-    <tr>
-      <td>
-        {{ igra.pravilni_del_gesla() }}
-      </td>
-    </tr>
+  <tr>
+    <td><h3> Neuspeli poskusi </h3></td>
+    <td>
+      {{ igra.nepravilni_ugibi() }}
+    </td>
+  </tr>
 
-    <tr>
-      <td><h3> Neuspeli poskusi </h3></td>
-      <td>
-        {{ igra.nepravilni_ugibi() }}
-      </td>
-    </tr>
+  % if poskus == model.ZMAGA or poskus == model.PORAZ:
+  <form action="/nova_igra/" method="post">
+    <button type="submit">Nova igra</button>
+  </form>
 
-    % if poskus == model.ZMAGA or poskus == model.PORAZ:
-    <form action="/igra/" method="post">
-      <button type="submit">Nova igra</button>
+  % else:
+
+  <tr>
+    <form action="/igra/" method='post'>
+      <input type="text" name="poskus">
+      <input type="submit" value="Ugibaj">
     </form>
+  </tr>
 
-    % else:
+  % end
 
-    <tr>
-      <form action="/igra/{{id_igre}}" method='post'>
-        <input type="text" name="poskus">
-        <input type="submit" value="Ugibaj">
-      </form>
-    </tr>
-
-    % end
-
-  </table>
-
-</body>
-
-</html>
+</table>
